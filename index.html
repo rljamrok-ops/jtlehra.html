@@ -134,6 +134,11 @@
             background: linear-gradient(135deg, #5D3FD3, #8A2BE2);
             color: white;
         }
+
+.tempo-btn {
+    background: linear-gradient(135deg, #FF1493, #FF69B4);
+    color: white;
+}
         
         .preset-btn {
             background: linear-gradient(135deg, #4169E1, #6495ED);
@@ -385,9 +390,8 @@
         <div class="preset-section">
             <label>Preset melodies:</label>
             <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <select id="presetSelect" style="flex-grow: 1;">
-                    </select>
-                <button class="preset-btn" onclick="loadSelectedPreset()">Load</button>
+               <select id="presetSelect" style="flex-grow: 1;" onchange="loadSelectedPreset()">
+    </select>
                 <button class="preset-btn" onclick="saveCurrentAsPreset()">💾 Save Current</button>
             </div>
         </div>
@@ -460,6 +464,7 @@
             <button class="clear-btn" id="applyBtn">Apply Settings</button>
             <button class="transpose-btn" onclick="transposeMelody('up')">▲ Transpose Up</button>
             <button class="transpose-btn" onclick="transposeMelody('down')">▼ Transpose Down</button>
+<button class="tempo-btn" onclick="setupTempoChange()">⏱️ Tempo Change</button>
         </div>
         
         <div class="grid-section">
@@ -1076,6 +1081,64 @@ const tehaiPatterns = {
             grid = newGrid;
             renderGrid();
         }
+// Tempo change over X cycles
+let tempoChangeActive = false;
+let tempoChangeInterval = null;
+let startBPM = 0;
+let targetBPM = 0;
+let totalCycles = 0;
+let currentCycle = 0;
+
+function setupTempoChange() {
+    const beats = parseInt(document.getElementById('beats').value);
+    const currentBPM = parseInt(document.getElementById('bpm').value);
+    
+    const target = prompt(`Current BPM: ${currentBPM}\nEnter target BPM:`);
+    if (!target || isNaN(parseInt(target))) return;
+    
+    const cycles = prompt('Enter number of cycles for tempo change:');
+    if (!cycles || isNaN(parseInt(cycles))) return;
+    
+    targetBPM = parseInt(target);
+    totalCycles = parseInt(cycles);
+    startBPM = currentBPM;
+    currentCycle = 0;
+    tempoChangeActive = true;
+    
+    if (!isPlaying) {
+        alert('Tempo change will begin when you press Play');
+    }
+}
+
+function updateTempoChange() {
+    if (!tempoChangeActive) return;
+    
+    currentCycle++;
+    
+    if (currentCycle >= totalCycles) {
+        // Reached target
+        document.getElementById('bpm').value = targetBPM;
+        document.getElementById('bpmInput').value = targetBPM;
+        document.getElementById('bpmValue').textContent = targetBPM;
+        tempoChangeActive = false;
+        return;
+    }
+    
+    // Linear interpolation
+    const progress = currentCycle / totalCycles;
+    const newBPM = Math.round(startBPM + (targetBPM - startBPM) * progress);
+    
+    document.getElementById('bpm').value = newBPM;
+    document.getElementById('bpmInput').value = newBPM;
+    document.getElementById('bpmValue').textContent = newBPM;
+    
+    // Restart playback with new tempo WITHOUT stopping first
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
+    const interval = (60 / (newBPM * division)) * 1000;
+    intervalId = setInterval(playBeat, interval);
+}
 
         // Function to populate the dropdown menu, including saved presets
         function populatePresetDropdown() {
@@ -1497,6 +1560,11 @@ const tehaiPatterns = {
             });
             
             currentBeat = (currentBeat + 1) % beats;
+
+// Check if we completed a cycle for tempo change
+if (currentBeat === 0 && tempoChangeActive) {
+    updateTempoChange();
+}
         }
         
         function startPlayback() {
