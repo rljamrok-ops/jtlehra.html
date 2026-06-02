@@ -184,7 +184,7 @@
             z-index: 10; cursor: grab; user-select: none;
         }
         .sargam-note {
-            height: 40px; display: flex; align-items: center;
+            height: 20px; display: flex; align-items: center;
             justify-content: center; text-align: center;
             font-weight: 700; color: var(--accent1);
             background: rgba(184,92,56,0.10);
@@ -202,7 +202,7 @@
         .grid-row { display: flex; margin: 0; }
         .tehai-row, .beat-label-row, .playback-row { min-height: 30px; }
         .beat-label-row  { min-height: 35px; }
-        .pitch-row       { min-height: 40px; }
+        .pitch-row       { min-height: 20px; }
         .playback-row    { min-height: 25px; }
 
         .row-label {
@@ -928,7 +928,11 @@ const tehaiPatterns = {
             { name: 'A#3', freq: 233.08, sargam: 'blank' },
             { name: 'A3', freq: 220.00, sargam: 'Dha' },
             { name: 'G#3', freq: 207.65, sargam: 'blank' },
-            { name: 'G3', freq: 196.00, sargam: 'Pa' }
+            { name: 'G3', freq: 196.00, sargam: 'Pa' },
+            { name: 'F#3', freq: 185.00, sargam: 'Teevra Ma' },
+        { name: 'F3', freq: 174.61, sargam: 'Ma' },
+        { name: 'E3', freq: 164.81, sargam: 'Ga' },
+        { name: 'D#3', freq: 155.56, sargam: 'Komal Ga' }
         ];
 
         // Mapping from note name to index in allNotes array (from top to bottom)
@@ -1149,16 +1153,8 @@ const tehaiPatterns = {
                     [noteToIdx['E4'], 32], [noteToIdx['F#4'], 34]
                 ]          
   },
-            '19': {
-                beats: 19, division: 2, soundType: 'harmonium_warm', 
-                pattern: [
-                    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['C5'], 4], [noteToIdx['D5'], 6], [noteToIdx['D#5'], 7],
-                    [noteToIdx['D5'], 8], [noteToIdx['B4'], 10], [noteToIdx['G4'], 12], [noteToIdx['G4'], 14], [noteToIdx['B4'], 15],
-                    [noteToIdx['A4'], 16], [noteToIdx['G4'], 18], [noteToIdx['F#4'], 20], [noteToIdx['G4'], 21], [noteToIdx['D#4'], 22], 
-                   [noteToIdx['B3'], 23], [noteToIdx['C4'], 24], [noteToIdx['D#4'], 26], [noteToIdx['F#4'], 28], [noteToIdx['G4'], 30], 
-                    [noteToIdx['B4'], 32], [noteToIdx['B4'], 33], [noteToIdx['A4'], 34], [noteToIdx['G4'], 35], [noteToIdx['F#4'], 36], [noteToIdx['G4'], 37]
-                ]       
-     },
+            '19': { beats: 19, division: 4, soundType: 'harmonium_warm', pattern: [ [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['C5'], 8], [noteToIdx['D5'], 12], [noteToIdx['D#5'], 14], [noteToIdx['D5'], 16], [noteToIdx['B4'], 20], [noteToIdx['G4'], 24], [noteToIdx['G4'], 28], [noteToIdx['B4'], 30], [noteToIdx['A4'], 32], [noteToIdx['G4'], 36], [noteToIdx['F#4'], 40], [noteToIdx['G4'], 42], [noteToIdx['D#4'], 44], [noteToIdx['B3'], 46], [noteToIdx['C4'], 48], [noteToIdx['D#4'], 52], [noteToIdx['F#4'], 56], [noteToIdx['G4'], 60], [noteToIdx['B4'], 64], [noteToIdx['B4'], 66], [noteToIdx['A4'], 68], [noteToIdx['G4'], 70], [noteToIdx['F#4'], 72], [noteToIdx['G4'], 74] ] }, 
+
             '19 (9.5)': {
                 beats: 19, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
