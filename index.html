@@ -492,115 +492,7 @@
     <div class="container">
         <h1>JamrokTabla Lehra 2026</h1>
         
-        <div class="preset-section">
-            <label>Preset melodies:</label>
-            <div style="display: flex; gap: 10px; margin-top: 10px;">
-               <select id="presetSelect" style="flex-grow: 1;" onchange="loadSelectedPreset()">
-    </select>
-                <button class="preset-btn" onclick="saveCurrentAsPreset()">💾 Save Current</button>
-            </div>
-        </div>
 
-        <!-- ===== SOLO STRUCTURE CONTROLLER PANEL ===== -->
-        <button class="controller-toggle-btn" onclick="toggleControllerPanel()">🎵 Solo Structure Controller ▼</button>
-        <div class="controller-panel" id="controllerPanel" style="display:none;">
-            <h2>🎵 Lehra Solo Structure Controller</h2>
-
-            <div class="ctrl-status-bar">
-                <h3 id="ctrlStatusTitle">Ready to Start</h3>
-                <div class="ctrl-status-info">
-                    <div class="ctrl-status-item">
-                        <div class="ctrl-status-label">Section</div>
-                        <div class="ctrl-status-value" id="ctrlSectionDisplay">-</div>
-                    </div>
-                    <div class="ctrl-status-item">
-                        <div class="ctrl-status-label">Cycle</div>
-                        <div class="ctrl-status-value" id="ctrlCycleDisplay">0/0</div>
-                    </div>
-                    <div class="ctrl-status-item">
-                        <div class="ctrl-status-label">Beat</div>
-                        <div class="ctrl-status-value" id="ctrlBeatDisplay">-</div>
-                    </div>
-                    <div class="ctrl-status-item">
-                        <div class="ctrl-status-label">BPM</div>
-                        <div class="ctrl-status-value" id="ctrlBpmDisplay">-</div>
-                    </div>
-                </div>
-                <div class="ctrl-beat-indicator" id="ctrlBeatIndicator"></div>
-            </div>
-
-            <div class="ctrl-main-controls">
-                <button class="ctrl-start-btn" id="ctrlStartBtn">▶ Start Solo</button>
-                <button class="ctrl-next-btn" id="ctrlNextBtn" disabled style="padding:10px 20px;font-size:0.95em;font-weight:bold;border:none;border-radius:8px;cursor:pointer;">⏭ Next Section</button>
-                <button class="ctrl-stop-btn" id="ctrlStopBtn" disabled>⏹ Stop</button>
-                <button class="ctrl-reset-btn" id="ctrlResetBtn">🔄 Reset</button>
-            </div>
-
-            <div class="ctrl-intro-outro">
-                <h4>Intro &amp; Outro</h4>
-                <div class="ctrl-toggle-row">
-                    <div class="ctrl-toggle" id="ctrlIntroToggle"><div class="ctrl-toggle-knob"></div></div>
-                    <label>Play Intro Melody — start from beat:
-                        <input type="number" id="ctrlIntroBeat" value="1" min="1" style="width:55px; margin-left:6px;">
-                    </label>
-                </div>
-                <div class="ctrl-toggle-row" style="margin-top:8px;">
-                    <div class="ctrl-toggle" id="ctrlOutroToggle"><div class="ctrl-toggle-knob"></div></div>
-                    <label>Play Outro Melody — end at beat:
-                        <input type="number" id="ctrlOutroBeat" value="1" min="1" style="width:55px; margin-left:6px;">
-                    </label>
-                </div>
-            </div>
-
-            <div class="ctrl-preset-strip">
-                <h4>Solo Structure Presets</h4>
-                <select id="ctrlStructurePreset" style="width:100%; padding:6px; border:1px solid #6366f1; border-radius:5px; font-size:0.9em; margin-bottom:8px;">
-                    <option value="">--- Select a Structure Preset ---</option>
-                </select>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                    <button class="ctrl-sm-btn ctrl-add-btn" onclick="ctrlSaveStructurePreset()">💾 Save Structure</button>
-                    <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadStructurePreset()">📂 Load Selected</button>
-                    <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteStructurePreset()">🗑️ Delete</button>
-                </div>
-            </div>
-
-            <div class="ctrl-tempo-block">
-                <h4>⏱️ Tempo Ramp</h4>
-                <div class="tempo-ramp-grid">
-                    <div>
-                        <label>Start BPM</label>
-                        <input type="number" id="tempoRampStart" min="12" max="600" placeholder="Current">
-                    </div>
-                    <div>
-                        <label>Target BPM</label>
-                        <input type="number" id="tempoRampTarget" min="12" max="600" placeholder="e.g. 160">
-                    </div>
-                    <div>
-                        <label>Over # Cycles</label>
-                        <input type="number" id="tempoRampCycles" min="1" max="200" placeholder="e.g. 8">
-                    </div>
-                </div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                    <button class="ctrl-sm-btn ctrl-tempo-btn" onclick="activateTempoRamp()">▶ Arm Ramp</button>
-                    <button class="ctrl-sm-btn ctrl-delete-btn" onclick="cancelTempoRamp()">✕ Cancel</button>
-                    <div class="tempo-ramp-status" id="tempoRampStatus">
-                        <span id="tempoRampLabel">Not armed</span>
-                        <div class="tempo-ramp-bar-wrap"><div class="tempo-ramp-bar" id="tempoRampBar"></div></div>
-                        <span id="tempoRampPct"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ctrl-sections-area">
-                <div class="ctrl-sections-header">
-                    <h4>Solo Sections</h4>
-                    <button class="ctrl-sm-btn ctrl-add-btn" onclick="ctrlAddSection()">➕ Add Section</button>
-                </div>
-                <div id="ctrlSectionsContainer"></div>
-            </div>
-        </div>
-        <!-- ===== END CONTROLLER PANEL ===== -->
-        
         <div class="controls">
             <div class="control-group row-1-col-1">
                 <label>Beats:</label>
@@ -669,12 +561,108 @@
             <button class="clear-btn" id="applyBtn">Apply Settings</button>
             <button class="transpose-btn" onclick="transposeMelody('up')">▲ Transpose Up</button>
             <button class="transpose-btn" onclick="transposeMelody('down')">▼ Transpose Down</button>
+            <select id="keyCenterSelect" onchange="changeKeyCenter()" style="padding: 10px; border-radius: 9px; border: 1.5px solid var(--border); font-family: 'Inter', sans-serif; font-weight: 600; color: var(--text-main); background: #fff; cursor: pointer; box-shadow: 0 3px 7px rgba(74,46,26,0.16);">
+                <option value="0">Key: C (Default)</option>
+                <option value="1">Key: C# / Db</option>
+                <option value="2">Key: D</option>
+                <option value="3">Key: D# / Eb</option>
+                <option value="4">Key: E</option>
+                <option value="5">Key: F</option>
+                <option value="6">Key: F# / Gb</option>
+                <option value="7">Key: G</option>
+                <option value="8">Key: G# / Ab</option>
+                <option value="9">Key: A</option>
+                <option value="10">Key: A# / Bb</option>
+                <option value="11">Key: B</option>
+            </select>
+        </div>
+        <div class="preset-section">
+            <label>Preset melodies:</label>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+               <select id="presetSelect" style="flex-grow: 1;" onchange="loadSelectedPreset()">
+    </select>
+                <button class="preset-btn" onclick="saveCurrentAsPreset()">💾 Save Current</button>
+            </div>
         </div>
         
         <div class="grid-section">
             <div class="grid-with-sargam">
                 <div class="sargam-wheel" id="sargamWheel"></div>
                 <div class="grid-wrapper" id="gridWrapper"></div>
+
+        <button class="controller-toggle-btn" onclick="toggleControllerPanel()">🎵 Solo Structure Controller ▼</button>
+        <div class="controller-panel" id="controllerPanel" style="display:none;">
+            <h2>🎵 Lehra Solo Structure Controller</h2>
+
+            <div class="ctrl-status-bar">
+                <h3 id="ctrlStatusTitle">Ready to Start</h3>
+                <div class="ctrl-status-info">
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">Section</div>
+                        <div class="ctrl-status-value" id="ctrlSectionDisplay">-</div>
+                    </div>
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">Cycle</div>
+                        <div class="ctrl-status-value" id="ctrlCycleDisplay">0/0</div>
+                    </div>
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">Beat</div>
+                        <div class="ctrl-status-value" id="ctrlBeatDisplay">-</div>
+                    </div>
+                    <div class="ctrl-status-item">
+                        <div class="ctrl-status-label">BPM</div>
+                        <div class="ctrl-status-value" id="ctrlBpmDisplay">-</div>
+                    </div>
+                </div>
+                <div class="ctrl-beat-indicator" id="ctrlBeatIndicator"></div>
+            </div>
+
+            <div class="ctrl-main-controls">
+                <button class="ctrl-start-btn" id="ctrlStartBtn">▶ Start Solo</button>
+                <button class="ctrl-next-btn" id="ctrlNextBtn" disabled style="padding:10px 20px;font-size:0.95em;font-weight:bold;border:none;border-radius:8px;cursor:pointer;">⏭ Next Section</button>
+                <button class="ctrl-stop-btn" id="ctrlStopBtn" disabled>⏹ Stop</button>
+                <button class="ctrl-reset-btn" id="ctrlResetBtn">🔄 Reset</button>
+            </div>
+
+            <div class="ctrl-intro-outro">
+                <h4>Intro &amp; Outro</h4>
+                <div class="ctrl-toggle-row">
+                    <div class="ctrl-toggle" id="ctrlIntroToggle"><div class="ctrl-toggle-knob"></div></div>
+                    <label>Play Intro Melody — start from beat:
+                        <input type="number" id="ctrlIntroBeat" value="1" min="1" style="width:55px; margin-left:6px;">
+                    </label>
+                </div>
+                <div class="ctrl-toggle-row" style="margin-top:8px;">
+                    <div class="ctrl-toggle" id="ctrlOutroToggle"><div class="ctrl-toggle-knob"></div></div>
+                    <label>Play Outro Melody — end at beat:
+                        <input type="number" id="ctrlOutroBeat" value="1" min="1" style="width:55px; margin-left:6px;">
+                    </label>
+                </div>
+            </div>
+
+            <div class="ctrl-preset-strip">
+                <h4>Solo Structure Presets</h4>
+                <select id="ctrlStructurePreset" style="width:100%; padding:6px; border:1px solid #6366f1; border-radius:5px; font-size:0.9em; margin-bottom:8px;">
+                    <option value="">--- Select a Structure Preset ---</option>
+                </select>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="ctrl-sm-btn ctrl-add-btn" onclick="ctrlSaveStructurePreset()">💾 Save Structure</button>
+                    <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadStructurePreset()">📂 Load Selected</button>
+                    <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteStructurePreset()">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <div class="ctrl-sections-area">
+                <div class="ctrl-sections-header">
+                    <h4>Solo Sections</h4>
+                    <button class="ctrl-sm-btn ctrl-add-btn" onclick="ctrlAddSection()">➕ Add Section</button>
+                    <button class="ctrl-sm-btn ctrl-tempo-btn" onclick="ctrlAddRampSection()">⏱ Add Ramp</button>
+                    <button class="ctrl-sm-btn ctrl-capture-btn" onclick="ctrlAddAlaapSection()">🎵 Add Alaap</button>
+                </div>
+                <div id="ctrlSectionsContainer"></div>
+            </div>
+        </div>
+
             </div>
         </div>
     </div>
@@ -703,6 +691,81 @@
         let sargamStartX = 0;
         let sargamStartLeft = 0;
         
+        let currentKeyOffset = 0; // 0 = C (Default)
+
+        // ── Key Center Logic ──────────────────────────────────────────────
+        function shiftGridAbsolute(semitoneShift) {
+            stopPlayback();
+            const numPitches = currentNotes.length;
+            const totalBeats = grid[0].length;
+            const newGrid = Array(numPitches).fill().map(() => Array(totalBeats).fill(false));
+
+            // Array index 0 is the highest pitch (D5). 
+            // Shifting UP in pitch means a NEGATIVE index shift.
+            const indexShift = -semitoneShift;
+
+            for (let i = 0; i < numPitches; i++) {
+                for (let j = 0; j < totalBeats; j++) {
+                    if (grid[i][j]) {
+                        let newIndex = i + indexShift;
+                        
+                        // Wrap around logic to keep notes within the available octaves
+                        while (newIndex < 0) newIndex += numPitches;
+                        while (newIndex >= numPitches) newIndex -= numPitches;
+                        
+                        newGrid[newIndex][j] = true;
+                    }
+                }
+            }
+            grid = newGrid;
+        }
+// ==========================================
+// PLACE THIS IN YOUR HELPER FUNCTIONS ZONE
+// ==========================================
+
+function generateAlaapPattern() {
+    const activePitchIndexes = [];
+    
+    // 1. Scan the main grid to find which note rows are actually used
+    for (let i = 0; i < grid.length; i++) {
+        if (grid[i].some(cell => cell === true)) {
+            activePitchIndexes.push(i);
+        }
+    }
+    
+    // Sort from lowest pitch to highest
+    activePitchIndexes.sort((a, b) => b - a); 
+
+    if (activePitchIndexes.length === 0) return [];
+
+    // 2. Build a slow, drifting movement
+    let alaapPattern = [];
+    let currentStep = 0;
+    const totalBeats = parseInt(document.getElementById('beats').value) || 16;
+    const targetDivision = 1; // Explicit quarter-note rhythm for alaap
+    
+    // Place notes far apart (every 4 beats) to keep it meditative
+    for (let beat = 0; beat < totalBeats * targetDivision; beat += 4) {
+        let noteIdx = activePitchIndexes[currentStep % activePitchIndexes.length];
+        alaapPattern.push([noteIdx, beat]);
+        currentStep++;
+    }
+    
+    return alaapPattern;
+}
+        
+function changeKeyCenter() {
+            const targetOffset = parseInt(document.getElementById('keyCenterSelect').value);
+            
+            // Calculate how far we need to move from the currently selected key
+            const shiftAmount = targetOffset - currentKeyOffset;
+            
+            shiftGridAbsolute(shiftAmount);
+            currentKeyOffset = targetOffset; // Update the global tracker
+            
+            renderGrid();
+        }
+
         // Tehai patterns derived from the provided CSV data (Taal, L1, L2, L3, DS1, DS2, DS3)
 const tehaiPatterns = {
 	1: { L1: 0, L2: 1, L3: 0, DS1: 2, DS2: 1, DS3: 3 },
@@ -909,6 +972,8 @@ const tehaiPatterns = {
 };
         
         const allNotes = [
+            { name: 'E5',  freq: 659.25, sargam: 'Ga' },
+            { name: 'D#5', freq: 622.25, sargam: 'blank' },
             { name: 'D5', freq: 587.33, sargam: 'Re' },
             { name: 'C#5', freq: 554.37, sargam: 'blank' },
             { name: 'C5', freq: 523.25, sargam: 'Sa' },
@@ -929,10 +994,8 @@ const tehaiPatterns = {
             { name: 'A3', freq: 220.00, sargam: 'Dha' },
             { name: 'G#3', freq: 207.65, sargam: 'blank' },
             { name: 'G3', freq: 196.00, sargam: 'Pa' },
-            { name: 'F#3', freq: 185.00, sargam: 'Teevra Ma' },
+         { name: 'F#3', freq: 185.00, sargam: 'blank' },
         { name: 'F3', freq: 174.61, sargam: 'Ma' },
-        { name: 'E3', freq: 164.81, sargam: 'Ga' },
-        { name: 'D#3', freq: 155.56, sargam: 'Komal Ga' }
         ];
 
         // Mapping from note name to index in allNotes array (from top to bottom)
@@ -984,12 +1047,12 @@ const tehaiPatterns = {
                 beats: 10,
                 division: 4,
                 soundType: 'harmonium_warm',
-                pattern: [
-                    [noteToIdx['D4'], 0], [noteToIdx['E4'], 6], [noteToIdx['E4'], 7], [noteToIdx['F#4'], 8], 
-                    [noteToIdx['G4'], 10], [noteToIdx['F#4'], 12], [noteToIdx['D4'], 18], [noteToIdx['D4'], 19], 
-                    [noteToIdx['E4'], 20], [noteToIdx['C4'], 22], [noteToIdx['B3'], 24], [noteToIdx['C4'], 26], [noteToIdx['C4'], 27], [noteToIdx['B3'], 28], [noteToIdx['G3'], 31], 
-		[noteToIdx['A3'], 34], [noteToIdx['B3'], 37]
-                ]
+pattern: [
+    [noteToIdx['C4'], 0], [noteToIdx['D4'], 6], [noteToIdx['D4'], 7], [noteToIdx['E4'], 8], 
+    [noteToIdx['F4'], 10], [noteToIdx['E4'], 12], [noteToIdx['C4'], 18], [noteToIdx['C4'], 19], 
+    [noteToIdx['D4'], 20], [noteToIdx['A#3'], 22], [noteToIdx['A3'], 24], [noteToIdx['A#3'], 26], [noteToIdx['A#3'], 27], [noteToIdx['A3'], 28], [noteToIdx['F3'], 31], 
+    [noteToIdx['G3'], 34], [noteToIdx['A3'], 37]
+]
             },
             '11': {
                 beats: 11, division: 2, soundType: 'harmonium_warm', 
@@ -1002,8 +1065,8 @@ const tehaiPatterns = {
             '11 (5.5)': {
                 beats: 11, division: 2, soundType: 'harmonium_warm', 
                 pattern: [
-                    [noteToIdx['E4'], 0], [noteToIdx['E4'], 4], [noteToIdx['F4'], 6], [noteToIdx['G4'], 8], 
-                    [noteToIdx['F4'], 12], [noteToIdx['E4'], 14], [noteToIdx['D4'], 16], [noteToIdx['C4'], 20]
+                    [noteToIdx['C4'], 0], [noteToIdx['C4'], 4], [noteToIdx['C#4'], 6], [noteToIdx['D#4'], 8], 
+                    [noteToIdx['C#4'], 12], [noteToIdx['C4'], 14], [noteToIdx['A#3'], 16], [noteToIdx['G#3'], 20]
                 ]
             },
             '12': { 
@@ -1116,12 +1179,12 @@ const tehaiPatterns = {
             '16 Ust Tafu Khan': {
                 beats: 16, division: 4, soundType: 'harmonium_warm', 
                 pattern: [
-                    [noteToIdx['C#5'], 0], [noteToIdx['G#4'], 6], [noteToIdx['C#5'], 8], [noteToIdx['C#5'], 12], 
-                    [noteToIdx['G#4'], 16], [noteToIdx['E4'], 20], [noteToIdx['G#4'], 24], [noteToIdx['A4'], 26], 
-                    [noteToIdx['E4'], 28], [noteToIdx['D#4'], 29], [noteToIdx['C#4'], 30], [noteToIdx['B3'], 31], 
-                    [noteToIdx['A3'], 32], [noteToIdx['F#4'], 36], [noteToIdx['E4'], 40], [noteToIdx['D#4'], 44], 
-                    [noteToIdx['E4'], 46], [noteToIdx['C#4'], 48], [noteToIdx['E4'], 54], [noteToIdx['F#4'], 56], 
-		    [noteToIdx['A4'], 58], [noteToIdx['C#5'], 60], [noteToIdx['C5'], 62]
+                    [noteToIdx['C5'], 0], [noteToIdx['G4'], 6], [noteToIdx['C5'], 8], [noteToIdx['C5'], 12], 
+                    [noteToIdx['G4'], 16], [noteToIdx['D#4'], 20], [noteToIdx['G4'], 24], [noteToIdx['G#4'], 26], 
+                    [noteToIdx['D#4'], 28], [noteToIdx['D4'], 29], [noteToIdx['C4'], 30], [noteToIdx['A#3'], 31], 
+                    [noteToIdx['G#3'], 32], [noteToIdx['F4'], 36], [noteToIdx['D#4'], 40], [noteToIdx['D4'], 44], 
+                    [noteToIdx['D#4'], 46], [noteToIdx['C4'], 48], [noteToIdx['D#4'], 54], [noteToIdx['F4'], 56], 
+		    [noteToIdx['G#4'], 58], [noteToIdx['C5'], 60], [noteToIdx['B4'], 62]
                 ]
             },
             '17': {
@@ -1145,15 +1208,16 @@ const tehaiPatterns = {
             },
             '18': {
                 beats: 18, division: 2, soundType: 'harmonium_warm', 
-                pattern: [
-                    [noteToIdx['G4'], 0], [noteToIdx['G4'], 2], [noteToIdx['F#4'], 4], [noteToIdx['E4'], 6], 
-                    [noteToIdx['F#4'], 8], [noteToIdx['F#4'], 10], [noteToIdx['E4'], 12], [noteToIdx['C#4'], 14], 
-                    [noteToIdx['E4'], 16], [noteToIdx['E4'], 18], [noteToIdx['C#4'], 20], [noteToIdx['C4'], 22], 
-                    [noteToIdx['B3'], 24], [noteToIdx['C#4'], 26], [noteToIdx['E4'], 28], [noteToIdx['C#4'], 30], 
-                    [noteToIdx['E4'], 32], [noteToIdx['F#4'], 34]
-                ]          
+               pattern: [
+    [noteToIdx['C5'], 0], [noteToIdx['C5'], 2], [noteToIdx['B4'], 4], [noteToIdx['A4'], 6], 
+    [noteToIdx['B4'], 8], [noteToIdx['B4'], 10], [noteToIdx['A4'], 12], [noteToIdx['F#4'], 14], 
+    [noteToIdx['A4'], 16], [noteToIdx['A4'], 18], [noteToIdx['F#4'], 20], [noteToIdx['F4'], 22], 
+    [noteToIdx['E4'], 24], [noteToIdx['F#4'], 26], [noteToIdx['A4'], 28], [noteToIdx['F#4'], 30], 
+    [noteToIdx['A4'], 32], [noteToIdx['B4'], 34]
+]
   },
-            '19': { beats: 19, division: 4, soundType: 'harmonium_warm', pattern: [ [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['C5'], 8], [noteToIdx['D5'], 12], [noteToIdx['D#5'], 14], [noteToIdx['D5'], 16], [noteToIdx['B4'], 20], [noteToIdx['G4'], 24], [noteToIdx['G4'], 28], [noteToIdx['B4'], 30], [noteToIdx['A4'], 32], [noteToIdx['G4'], 36], [noteToIdx['F#4'], 40], [noteToIdx['G4'], 42], [noteToIdx['D#4'], 44], [noteToIdx['B3'], 46], [noteToIdx['C4'], 48], [noteToIdx['D#4'], 52], [noteToIdx['F#4'], 56], [noteToIdx['G4'], 60], [noteToIdx['B4'], 64], [noteToIdx['B4'], 66], [noteToIdx['A4'], 68], [noteToIdx['G4'], 70], [noteToIdx['F#4'], 72], [noteToIdx['G4'], 74] ] }, 
+            '19': { beats: 19, division: 4, soundType: 'harmonium_warm', 
+pattern: [ [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['C5'], 8], [noteToIdx['D5'], 12], [noteToIdx['D#5'], 14], [noteToIdx['D5'], 16], [noteToIdx['B4'], 20], [noteToIdx['G4'], 24], [noteToIdx['G4'], 28], [noteToIdx['B4'], 30], [noteToIdx['A4'], 32], [noteToIdx['G4'], 36], [noteToIdx['F#4'], 40], [noteToIdx['G4'], 42], [noteToIdx['D#4'], 44], [noteToIdx['B3'], 46], [noteToIdx['C4'], 48], [noteToIdx['D#4'], 52], [noteToIdx['F#4'], 56], [noteToIdx['G4'], 60], [noteToIdx['B4'], 64], [noteToIdx['B4'], 66], [noteToIdx['A4'], 68], [noteToIdx['G4'], 70], [noteToIdx['F#4'], 72], [noteToIdx['G4'], 74] ] }, 
 
             '19 (9.5)': {
                 beats: 19, division: 2, soundType: 'harmonium_warm', 
@@ -1387,25 +1451,25 @@ const tehaiPatterns = {
     division: 2,
     soundType: 'harmonium_warm',
     pattern: [
-        [noteToIdx['G4'], 20],
-        [noteToIdx['F#4'], 16],
-        [noteToIdx['F#4'], 24],
-        [noteToIdx['E4'], 12],
-        [noteToIdx['E4'], 14],
-        [noteToIdx['E4'], 40],
-        [noteToIdx['D4'], 0],
-        [noteToIdx['D4'], 36],
-        [noteToIdx['D4'], 38],
-        [noteToIdx['C4'], 44],
-        [noteToIdx['C4'], 50],
-        [noteToIdx['C4'], 56],
-        [noteToIdx['B3'], 48],
-        [noteToIdx['B3'], 52],
-        [noteToIdx['B3'], 54],
-        [noteToIdx['B3'], 58],
-        [noteToIdx['B3'], 76],
-        [noteToIdx['A3'], 70],
-        [noteToIdx['G3'], 64]
+        [noteToIdx['F4'], 20],
+        [noteToIdx['E4'], 16],
+        [noteToIdx['E4'], 24],
+        [noteToIdx['D4'], 12],
+        [noteToIdx['D4'], 14],
+        [noteToIdx['D4'], 40],
+        [noteToIdx['C4'], 0],
+        [noteToIdx['C4'], 36],
+        [noteToIdx['C4'], 38],
+        [noteToIdx['A#3'], 44],
+        [noteToIdx['A#3'], 50],
+        [noteToIdx['A#3'], 56],
+        [noteToIdx['A3'], 48],
+        [noteToIdx['A3'], 52],
+        [noteToIdx['A3'], 54],
+        [noteToIdx['A3'], 58],
+        [noteToIdx['A3'], 76],
+        [noteToIdx['G3'], 70],
+        [noteToIdx['F3'], 64]
     ]
 },
 '45 (11.25)': {
@@ -1499,83 +1563,7 @@ const tehaiPatterns = {
             grid = newGrid;
             renderGrid();
         }
-// ── Inline Tempo Ramp ──────────────────────────────────────────────
-let tempoChangeActive = false;
-let startBPM = 0;
-let targetBPM = 0;
-let totalCycles = 0;
-let currentCycle = 0;
-
-function activateTempoRamp() {
-    const startVal = parseInt(document.getElementById('tempoRampStart').value);
-    const targetVal = parseInt(document.getElementById('tempoRampTarget').value);
-    const cyclesVal = parseInt(document.getElementById('tempoRampCycles').value);
-    if (isNaN(targetVal) || targetVal < 12 || targetVal > 600) {
-        document.getElementById('tempoRampLabel').textContent = '⚠ Set a valid Target BPM';
-        return;
-    }
-    if (isNaN(cyclesVal) || cyclesVal < 1) {
-        document.getElementById('tempoRampLabel').textContent = '⚠ Set cycles (≥1)';
-        return;
-    }
-    startBPM = isNaN(startVal) ? parseInt(document.getElementById('bpm').value) || 120 : startVal;
-    targetBPM = targetVal;
-    totalCycles = cyclesVal;
-    currentCycle = 0;
-    tempoChangeActive = true;
-    document.getElementById('tempoRampStart').value = startBPM;
-    document.getElementById('bpm').value = startBPM;
-    document.getElementById('bpmInput').value = startBPM;
-    document.getElementById('bpmValue').textContent = startBPM;
-    updateTempoRampUI();
-}
-
-function cancelTempoRamp() {
-    tempoChangeActive = false;
-    currentCycle = 0;
-    document.getElementById('tempoRampLabel').textContent = 'Not armed';
-    document.getElementById('tempoRampBar').style.width = '0%';
-    document.getElementById('tempoRampPct').textContent = '';
-    document.getElementById('tempoRampLabel').classList.remove('tempo-ramp-active');
-}
-
-function updateTempoRampUI() {
-    const label = document.getElementById('tempoRampLabel');
-    const bar = document.getElementById('tempoRampBar');
-    const pct = document.getElementById('tempoRampPct');
-    if (!tempoChangeActive) return;
-    const progress = Math.min(currentCycle / totalCycles, 1);
-    label.textContent = `Ramping: ${startBPM}→${targetBPM} BPM`;
-    label.classList.add('tempo-ramp-active');
-    bar.style.width = (progress * 100) + '%';
-    pct.textContent = Math.round(progress * 100) + '%';
-}
-
-function updateTempoChange() {
-    if (!tempoChangeActive) return;
-    currentCycle++;
-    if (currentCycle >= totalCycles) {
-        document.getElementById('bpm').value = targetBPM;
-        document.getElementById('bpmInput').value = targetBPM;
-        document.getElementById('bpmValue').textContent = targetBPM;
-        tempoChangeActive = false;
-        document.getElementById('tempoRampLabel').textContent = `Done: ${targetBPM} BPM`;
-        document.getElementById('tempoRampBar').style.width = '100%';
-        document.getElementById('tempoRampPct').textContent = '100%';
-        return;
-    }
-    const progress = currentCycle / totalCycles;
-    const newBPM = Math.round(startBPM + (targetBPM - startBPM) * progress);
-    document.getElementById('bpm').value = newBPM;
-    document.getElementById('bpmInput').value = newBPM;
-    document.getElementById('bpmValue').textContent = newBPM;
-    updateTempoRampUI();
-    if (intervalId) {
-        clearInterval(intervalId);
-        const interval = (60 / (newBPM * division)) * 1000;
-        intervalId = setInterval(playBeat, interval);
-    }
-}
+// ── Inline Tempo Ramp (legacy standalone functions removed; ramp is now a section type) ──
 
         // Function to populate the dropdown menu, including saved presets
         function populatePresetDropdown() {
@@ -1706,6 +1694,13 @@ function updateTempoChange() {
             document.getElementById('tehaiToggle').classList.toggle('active', canTehai);
             document.getElementById('tehaiStatus').textContent = canTehai ? 'On' : 'Off';
             
+            // --- NEW KEY CENTER HOOK ---
+            // Apply key center offset if a new preset is loaded while a different key is selected
+            if (currentKeyOffset !== 0) {
+                shiftGridAbsolute(currentKeyOffset);
+            }
+            // ---------------------------
+            
             renderGrid();
         }
         
@@ -1785,9 +1780,13 @@ function updateTempoChange() {
             let sargamHtml = '';
             
             for (let i = 0; i < currentNotes.length; i++) {
-                const note = currentNotes[i];
-                const sargamClass = note.sargam === 'blank' ? 'sargam-note blank' : 'sargam-note';
-                const sargamText = note.sargam === 'blank' ? '' : note.sargam;
+                // Offset the sargam index so 'Sa' follows your new key center
+                let sargamIdx = (i + currentKeyOffset) % currentNotes.length;
+                if (sargamIdx < 0) sargamIdx += currentNotes.length;
+
+                const noteForSargam = currentNotes[sargamIdx];
+                const sargamClass = noteForSargam.sargam === 'blank' ? 'sargam-note blank' : 'sargam-note';
+                const sargamText = noteForSargam.sargam === 'blank' ? '' : noteForSargam.sargam;
                 sargamHtml += `<div class="${sargamClass}">${sargamText}</div>`;
             }
             sargamWheel.innerHTML = sargamHtml;
@@ -2163,11 +2162,6 @@ if (currentBeat === 0) {
         }
     });
 }
-
-// Check if we completed a cycle for tempo change
-if (currentBeat === 0 && tempoChangeActive) {
-    updateTempoChange();
-}
         }
         
         function startPlayback() {
@@ -2404,7 +2398,7 @@ bpmRange.addEventListener('input', (e) => {
 
         // Controller state
         let ctrlSections = [
-            { name: 'Section 1', beats: '', bpm: 120, cycles: 0, division: '', preset: '' }
+            { name: 'Section 1', type: 'melody', beats: '', bpm: 120, cycles: 0, division: '', preset: '', rampTargetBpm: '', rampBeats: '' }
         ];
         let ctrlIsPlaying = false;
         let ctrlCurrentSectionIndex = -1;
@@ -2417,6 +2411,16 @@ bpmRange.addEventListener('input', (e) => {
         let ctrlIsOutro = false;
         let ctrlNextSectionRequested = false;
         let ctrlCurrentGrid = [];
+
+        // Tempo ramp state for section-based ramping
+        let ctrlRampActive = false;
+        let ctrlRampStartBpm = 0;
+        let ctrlRampTargetBpm = 0;
+        let ctrlRampCurrentBpm = 0;
+        let ctrlRampTotalBeats = 0;
+        let ctrlRampBeatCount = 0;
+        let ctrlRampMelodyBeats = 0;    // total sub-beats of melody looping during ramp
+        let ctrlRampMelodyDivision = 1; // division of that melody
 
         // Build a preset name list from lehra6C's newPresets
         function getCtrlPresetNames() {
@@ -2465,21 +2469,56 @@ bpmRange.addEventListener('input', (e) => {
                         <div style="height:100%;width:${Math.min(100,(ctrlCurrentCycle/(s.cycles||1))*100)}%;background:var(--accent3);border-radius:2px;transition:width 0.5s"></div>
                     </div>` : '';
 
+                const isRamp = s.type === 'tempoRamp';
+
+                const chipHTML = isRamp
+                    ? `<span class="ctrl-chip">⏱ Ramp</span>
+                       <span class="ctrl-chip">${displayBpm}→${s.rampTargetBpm || '?'} BPM</span>
+                       <span class="ctrl-chip">${s.rampBeats || '?'} beats</span>`
+                    : `<span class="ctrl-chip">${displayBpm} BPM</span>
+                       <span class="ctrl-chip">${displayBeats} beats</span>
+                       <span class="ctrl-chip">${divLabel}</span>
+                       <span class="ctrl-chip ${displayCycles===0?'cycles0':''}">${cycleLabel}</span>
+                       ${s.preset ? `<span class="ctrl-chip preset" title="${s.preset}">${s.preset.length>16?s.preset.slice(0,15)+'…':s.preset}</span>` : ''}`;
+
                 return `<div class="${cls}" id="ctrlSection_${i}">
                     <div class="ctrl-section-summary" onclick="ctrlToggleExpand(${i})">
                         <div class="ctrl-section-num">${i+1}</div>
                         <div class="ctrl-section-name-pill">${s.name || 'Section '+(i+1)}</div>
                         <div class="ctrl-section-chips">
-                            <span class="ctrl-chip">${displayBpm} BPM</span>
-                            <span class="ctrl-chip">${displayBeats} beats</span>
-                            <span class="ctrl-chip">${divLabel}</span>
-                            <span class="ctrl-chip ${displayCycles===0?'cycles0':''}">${cycleLabel}</span>
-                            ${s.preset ? `<span class="ctrl-chip preset" title="${s.preset}">${s.preset.length>16?s.preset.slice(0,15)+'…':s.preset}</span>` : ''}
+                            ${chipHTML}
                         </div>
                         <button class="ctrl-section-expand-btn" title="Expand/collapse">▼</button>
                     </div>
                     ${progressLine}
                     <div class="ctrl-section-detail">
+                        ${isRamp ? `
+                        <div class="ctrl-section-controls">
+                            <div>
+                                <label>Name</label>
+                                <input type="text" value="${s.name}" onchange="ctrlUpdateSection(${i},'name',this.value)">
+                            </div>
+                            <div>
+                                <label>Start BPM</label>
+                                <input type="number" min="12" max="600" value="${displayBpm}" onchange="ctrlUpdateSection(${i},'bpm',this.value)" placeholder="Current BPM">
+                            </div>
+                            <div>
+                                <label>Target BPM</label>
+                                <input type="number" min="12" max="600" value="${s.rampTargetBpm || ''}" onchange="ctrlUpdateSection(${i},'rampTargetBpm',this.value)" placeholder="e.g. 160">
+                            </div>
+                            <div>
+                                <label>Over # Counts=division X beats in taal X cycles=</label>
+                                <input type="number" min="1" value="${s.rampBeats || ''}" onchange="ctrlUpdateSection(${i},'rampBeats',this.value)" placeholder="e.g. 64">
+                            </div>
+                        </div>
+                        <div class="ctrl-section-actions">
+                            <div class="ctrl-section-reorder">
+                                <button class="ctrl-sm-btn ctrl-move-btn" onclick="ctrlMoveSection(${i},-1)" ${i===0?'disabled':''} title="Move up">↑</button>
+                                <button class="ctrl-sm-btn ctrl-move-btn" onclick="ctrlMoveSection(${i},+1)" ${i===ctrlSections.length-1?'disabled':''} title="Move down">↓</button>
+                                <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteSection(${i})" ${ctrlSections.length===1?'disabled':''} title="Delete section">✕</button>
+                            </div>
+                        </div>
+                        ` : `
                         <div class="ctrl-section-controls">
                             <div>
                                 <label>Name</label>
@@ -2524,6 +2563,7 @@ bpmRange.addEventListener('input', (e) => {
                                 <button class="ctrl-sm-btn ctrl-delete-btn" onclick="ctrlDeleteSection(${i})" ${ctrlSections.length===1?'disabled':''} title="Delete section">✕</button>
                             </div>
                         </div>
+                        `}
                     </div>
                 </div>`;
             }).join('');
@@ -2582,7 +2622,7 @@ bpmRange.addEventListener('input', (e) => {
         }
 
         function ctrlUpdateSection(index, field, value) {
-            if (['beats','bpm','cycles','division'].includes(field)) {
+            if (['beats','bpm','cycles','division','rampTargetBpm','rampBeats'].includes(field)) {
                 ctrlSections[index][field] = parseInt(value);
             } else {
                 ctrlSections[index][field] = value;
@@ -2594,7 +2634,21 @@ bpmRange.addEventListener('input', (e) => {
 
         function ctrlAddSection() {
             const newIdx = ctrlSections.length;
-            ctrlSections.push({ name: 'Section ' + (newIdx + 1), beats: '', bpm: parseInt(document.getElementById('bpm').value) || 120, cycles: 0, division: '', preset: '' });
+            ctrlSections.push({ name: 'Section ' + (newIdx + 1), type: 'melody', beats: '', bpm: parseInt(document.getElementById('bpm').value) || 120, cycles: 0, division: '', preset: '', rampTargetBpm: '', rampBeats: '' });
+            ctrlExpandedSections.add(newIdx);
+            ctrlRenderSections();
+        }
+
+        function ctrlAddRampSection() {
+            const newIdx = ctrlSections.length;
+            ctrlSections.push({
+                name: 'Tempo Ramp ' + (newIdx + 1),
+                type: 'tempoRamp',
+                bpm: parseInt(document.getElementById('bpm').value) || 120,
+                rampTargetBpm: '',
+                rampBeats: '',
+                beats: '', cycles: 1, division: '', preset: ''
+            });
             ctrlExpandedSections.add(newIdx);
             ctrlRenderSections();
         }
@@ -2649,7 +2703,23 @@ bpmRange.addEventListener('input', (e) => {
             });
         }
 
-        function ctrlLoadMelodyForSection(section) {
+        function ctrlAddAlaapSection() {
+    const newIdx = ctrlSections.length;
+    ctrlSections.push({
+        name: 'Alaap ' + (newIdx + 1),
+        type: 'alaap',
+        beats: parseInt(document.getElementById('beats').value) || 16,
+        bpm: 30, // Classic slow meditative tempo
+        cycles: 1,
+        division: 1, // Quarter notes to stretch note lengths
+        preset: '',
+        rampTargetBpm: '',
+        rampBeats: ''
+    });
+    ctrlExpandedSections.add(newIdx);
+    ctrlRenderSections();
+}
+function ctrlLoadMelodyForSection(section) {
             const resolvedPreset = section.preset && newPresets[section.preset] ? newPresets[section.preset] : null;
             const resolvedBeats    = section.beats    || (resolvedPreset ? resolvedPreset.beats    : parseInt(document.getElementById('beats').value) || 16);
             const resolvedDivision = section.division || (resolvedPreset ? resolvedPreset.division : parseInt(document.getElementById('divisionSelect').value) || 2);
@@ -2673,15 +2743,42 @@ bpmRange.addEventListener('input', (e) => {
                     });
                 });
             }
+// ─── ADD THE FIX HERE ──────────────────────────────────────────────────
+    // Shift the Solo Controller's playback grid to match the active key offset
+    if (typeof currentKeyOffset !== 'undefined' && currentKeyOffset !== 0) {
+        const numPitches = ctrlCurrentGrid.length;
+        const shiftedGrid = Array(numPitches).fill().map(() => Array(totalBeats).fill(false));
+        
+        for (let i = 0; i < numPitches; i++) {
+            for (let j = 0; j < totalBeats; j++) {
+                if (ctrlCurrentGrid[i][j]) {
+                    // Array index 0 is the highest note, so shifting 'up' goes backward in indices (-currentKeyOffset)
+                    let newIndex = i - currentKeyOffset;
+                    if (newIndex >= 0 && newIndex < numPitches) {
+                        shiftedGrid[newIndex][j] = true;
+                    }
+                }
+            }
+        }
+        ctrlCurrentGrid = shiftedGrid;
+    }
         }
 
         function ctrlPlayBeat() {
             const section = ctrlSections[ctrlCurrentSectionIndex];
-            const sectionDivision = section._resolvedDivision || section.division || parseInt(document.getElementById('divisionSelect').value) || 2;
-            const sectionBeats    = section._resolvedBeats    || section.beats    || parseInt(document.getElementById('beats').value) || 16;
-            const totalBeats = sectionBeats * sectionDivision;
-            const sectionBpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
-            const beatDuration = 60 / (sectionBpm * sectionDivision);
+
+            // During a ramp, use the melody's real division so note durations and
+            // beat-indicator math stay correct. The BPM comes from ctrlRampCurrentBpm.
+            const sectionDivision = ctrlRampActive
+                ? ctrlRampMelodyDivision
+                : (section._resolvedDivision || section.division || parseInt(document.getElementById('divisionSelect').value) || 2);
+            const sectionBeats = ctrlRampActive
+                ? ctrlRampMelodyBeats   // already = beats * division (sub-beats)
+                : ((section._resolvedBeats || section.beats || parseInt(document.getElementById('beats').value) || 16)
+                   * sectionDivision);
+            const totalBeats = sectionBeats; // already includes division factor
+            const activeBpm = ctrlRampActive ? ctrlRampCurrentBpm : (section.bpm || parseInt(document.getElementById('bpm').value) || 120);
+            const beatDuration = 60 / (activeBpm * sectionDivision);
 
             // Play notes
             allNotes.forEach((note, noteIdx) => {
@@ -2696,15 +2793,39 @@ bpmRange.addEventListener('input', (e) => {
                 playMetronome(ctrlCurrentBeat === 0);
             }
 
-            // Sync BPM to main slider so it always reflects the playing tempo
-            ctrlSyncBpmToMain(sectionBpm);
-
+            ctrlSyncBpmToMain(activeBpm);
             document.getElementById('ctrlBeatDisplay').textContent = Math.floor(ctrlCurrentBeat / sectionDivision) + 1;
-            document.getElementById('ctrlBpmDisplay').textContent = sectionBpm;
+            document.getElementById('ctrlBpmDisplay').textContent = activeBpm;
             ctrlUpdateBeatIndicator(Math.floor(ctrlCurrentBeat / sectionDivision));
 
             ctrlCurrentBeat++;
 
+            // ── Ramp path ──────────────────────────────────────────────────
+            if (ctrlRampActive) {
+                // Wrap melody loop
+                if (ctrlCurrentBeat >= ctrlRampMelodyBeats) ctrlCurrentBeat = 0;
+
+                ctrlRampBeatCount++;
+                if (ctrlRampBeatCount >= ctrlRampTotalBeats) {
+                    // Ramp complete — land exactly on target BPM and move on
+                    ctrlRampActive = false;
+                    ctrlRampCurrentBpm = ctrlRampTargetBpm;
+                    ctrlSyncBpmToMain(ctrlRampTargetBpm);
+                    ctrlCurrentBeat = 0;
+                    clearInterval(ctrlIntervalId);
+                    ctrlProceedToNextSection();
+                    return;
+                }
+
+                // Advance BPM proportionally and reschedule
+                const rampProgress = ctrlRampBeatCount / ctrlRampTotalBeats;
+                ctrlRampCurrentBpm = Math.round(ctrlRampStartBpm + (ctrlRampTargetBpm - ctrlRampStartBpm) * rampProgress);
+                clearInterval(ctrlIntervalId);
+                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (ctrlRampCurrentBpm * sectionDivision)) * 1000);
+                return;
+            }
+
+            // ── Normal section path ────────────────────────────────────────
             const sectionCycles = (section.cycles !== '' && section.cycles !== undefined) ? parseInt(section.cycles) : 0;
 
             let endBeat = totalBeats;
@@ -2756,6 +2877,31 @@ bpmRange.addEventListener('input', (e) => {
                 ctrlCurrentCycle = 1;
                 ctrlCurrentBeat = 0;
                 const section = ctrlSections[ctrlCurrentSectionIndex];
+
+                // Handle tempo ramp section
+                if (section.type === 'tempoRamp') {
+                    ctrlRampActive = true;
+                    ctrlRampStartBpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+                    ctrlRampTargetBpm = parseInt(section.rampTargetBpm) || ctrlRampStartBpm;
+                    ctrlRampCurrentBpm = ctrlRampStartBpm;
+                    ctrlRampTotalBeats = parseInt(section.rampBeats) || 1;
+                    ctrlRampBeatCount = 0;
+                    // Keep ctrlCurrentGrid from the previous section so melody keeps playing.
+                    const prevSection = ctrlSections[ctrlCurrentSectionIndex - 1];
+                    ctrlRampMelodyDivision = (prevSection && prevSection._resolvedDivision) || parseInt(document.getElementById('divisionSelect').value) || 2;
+                    ctrlRampMelodyBeats = ctrlCurrentGrid[0] ? ctrlCurrentGrid[0].length : 1;
+                    ctrlCurrentBeat = 0;
+                    ctrlSyncBpmToMain(ctrlRampStartBpm);
+                    ctrlCreateBeatIndicator(ctrlRampMelodyBeats / ctrlRampMelodyDivision);
+                    ctrlUpdateStatus();
+                    ctrlRenderSections();
+                    document.getElementById('ctrlNextBtn').disabled = false;
+                    clearInterval(ctrlIntervalId);
+                    ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (ctrlRampStartBpm * ctrlRampMelodyDivision)) * 1000);
+                    return;
+                }
+
+                ctrlRampActive = false;
                 ctrlLoadMelodyForSection(section);
                 const rb = section._resolvedBeats; const rd = section._resolvedDivision;
                 const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
@@ -2788,6 +2934,29 @@ bpmRange.addEventListener('input', (e) => {
                 ctrlCurrentSectionIndex = 0;
                 ctrlCurrentCycle = 1;
                 const section = ctrlSections[0];
+
+                if (section.type === 'tempoRamp') {
+                    ctrlRampActive = true;
+                    ctrlRampStartBpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+                    ctrlRampTargetBpm = parseInt(section.rampTargetBpm) || ctrlRampStartBpm;
+                    ctrlRampCurrentBpm = ctrlRampStartBpm;
+                    ctrlRampTotalBeats = parseInt(section.rampBeats) || 1;
+                    ctrlRampBeatCount = 0;
+                    // Load current grid melody since ramp is first section
+                    ctrlLoadMelodyForSection({ beats: '', division: '', preset: '' });
+                    ctrlRampMelodyDivision = parseInt(document.getElementById('divisionSelect').value) || 2;
+                    ctrlRampMelodyBeats = ctrlCurrentGrid[0] ? ctrlCurrentGrid[0].length : 1;
+                    ctrlCurrentBeat = 0;
+                    ctrlSyncBpmToMain(ctrlRampStartBpm);
+                    ctrlCreateBeatIndicator(ctrlRampMelodyBeats / ctrlRampMelodyDivision);
+                    ctrlUpdateStatus();
+                    ctrlRenderSections();
+                    document.getElementById('ctrlNextBtn').disabled = false;
+                    ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (ctrlRampStartBpm * ctrlRampMelodyDivision)) * 1000);
+                    return;
+                }
+
+                ctrlRampActive = false;
                 ctrlLoadMelodyForSection(section);
                 const rb = section._resolvedBeats; const rd = section._resolvedDivision;
                 const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
@@ -2864,6 +3033,38 @@ bpmRange.addEventListener('input', (e) => {
             document.getElementById('ctrlCycleDisplay').textContent = '1/1';
             ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (rbpm * rd)) * 1000);
         }
+function generateAlaapPattern() {
+    const activePitchIndexes = [];
+    
+    // 1. Scan the main grid to find which note rows are actually used
+    for (let i = 0; i < grid.length; i++) {
+        if (grid[i].some(cell => cell === true)) {
+            activePitchIndexes.push(i);
+        }
+    }
+    
+    // Sort from lowest pitch to highest (allNotes array goes from high to low)
+    activePitchIndexes.sort((a, b) => b - a); 
+
+    if (activePitchIndexes.length === 0) return [];
+
+    // 2. Build a slow Vistar (expansion) movement
+    // Example: Sa -> Re -> Sa -> Ga -> Re -> Sa...
+    let alaapPattern = [];
+    let currentStep = 0;
+    const totalBeats = parseInt(document.getElementById('beats').value);
+    
+    // Place notes far apart (e.g., every 4 beats) to keep it slow
+    for (let beat = 0; beat < totalBeats * division; beat += 4) {
+        // Grab a note from our active scale pool using a slow wandering algorithm
+        let noteIdx = activePitchIndexes[currentStep % activePitchIndexes.length];
+        alaapPattern.push([noteIdx, beat]);
+        
+        currentStep++;
+    }
+    
+    return alaapPattern;
+}
 
         function ctrlUpdateStatus() {
             if (ctrlIsIntro) {
