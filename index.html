@@ -474,6 +474,7 @@
         .ctrl-load-btn   { background: linear-gradient(135deg, #c97d3a, #e0a060); color: #fff; }
         .ctrl-dupe-btn   { background: linear-gradient(135deg, #5a7bb5, #7a9ed8); color: #fff; }
         .ctrl-capture-btn { background: linear-gradient(135deg, #a06b9a, #c08ab8); color: #fff; }
+        .ctrl-jump-btn   { background: linear-gradient(135deg, #5a9e6f, #7abc8a); color: #fff; }
         .ctrl-move-btn   { background: rgba(120,100,80,0.12); color: var(--text-mid); box-shadow: none; border: 1px solid var(--border-soft); }
         .ctrl-move-btn:hover { background: rgba(120,100,80,0.22); }
         .ctrl-tempo-btn  { background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #fff; }
@@ -2085,43 +2086,43 @@ pattern: [ [noteToIdx['C5'], 0], [noteToIdx['C5'], 4], [noteToIdx['C5'], 8], [no
             }, duration * 1000);
         }
         
-        // Warm low-pitched tabla-like metronome click
-        function playMetronome(isBeat1) {
-            const now = audioContext.currentTime;
-            const vol = parseInt(document.getElementById('volume').value) / 100;
+       // Sharp, high-pitched click metronome
+function playMetronome(isBeat1) {
+    const now = audioContext.currentTime;
+    const vol = parseInt(document.getElementById('volume').value) / 100;
 
-            // Fundamental tone — low wooden thud
-            const osc = audioContext.createOscillator();
-            const oscGain = audioContext.createGain();
-            osc.type = 'sine';
-            osc.frequency.value = isBeat1 ? 200 : 140; // beat-1 slightly higher
-            osc.frequency.setTargetAtTime(isBeat1 ? 100 : 80, now, 0.025);
-            oscGain.gain.setValueAtTime(vol * 0.45, now);
-            oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-            osc.connect(oscGain);
-            oscGain.connect(audioContext.destination);
-            osc.start(now);
-            osc.stop(now + 0.13);
+    // Fundamental tone — bright, quick tick
+    const osc = audioContext.createOscillator();
+    const oscGain = audioContext.createGain();
+    osc.type = 'triangle'; // a bit more edge than sine, still clean
+    osc.frequency.value = isBeat1 ? 1800 : 1200; // much higher pitch
+    osc.frequency.setTargetAtTime(isBeat1 ? 1400 : 900, now, 0.008); // fast pitch drop
+    oscGain.gain.setValueAtTime(vol * 0.4, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.035); // short decay = sharp
+    osc.connect(oscGain);
+    oscGain.connect(audioContext.destination);
+    osc.start(now);
+    osc.stop(now + 0.04);
 
-            // Short noise transient for the "click" character
-            const bufSize = Math.floor(audioContext.sampleRate * 0.04);
-            const buf = audioContext.createBuffer(1, bufSize, audioContext.sampleRate);
-            const data = buf.getChannelData(0);
-            for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
-            const noise = audioContext.createBufferSource();
-            noise.buffer = buf;
-            const noiseFilter = audioContext.createBiquadFilter();
-            noiseFilter.type = 'lowpass';
-            noiseFilter.frequency.value = 400;
-            const noiseGain = audioContext.createGain();
-            noiseGain.gain.setValueAtTime(vol * 0.18, now);
-            noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-            noise.connect(noiseFilter);
-            noiseFilter.connect(noiseGain);
-            noiseGain.connect(audioContext.destination);
-            noise.start(now);
-            noise.stop(now + 0.04);
-        }
+    // Short noise transient — highpass filtered for "click" crispness
+    const bufSize = Math.floor(audioContext.sampleRate * 0.02);
+    const buf = audioContext.createBuffer(1, bufSize, audioContext.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
+    const noise = audioContext.createBufferSource();
+    noise.buffer = buf;
+    const noiseFilter = audioContext.createBiquadFilter();
+    noiseFilter.type = 'highpass'; // was lowpass — this is the key change
+    noiseFilter.frequency.value = 3000;
+    const noiseGain = audioContext.createGain();
+    noiseGain.gain.setValueAtTime(vol * 0.25, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(audioContext.destination);
+    noise.start(now);
+    noise.stop(now + 0.02);
+}
         
         function playBeat() {
             const beats = grid[0].length;
@@ -2512,6 +2513,7 @@ bpmRange.addEventListener('input', (e) => {
                             </div>
                         </div>
                         <div class="ctrl-section-actions">
+                            <button class="ctrl-sm-btn ctrl-jump-btn" onclick="ctrlJumpToSection(${i})" title="Jump to and start playing this section now">⏵ Jump Here</button>
                             <div class="ctrl-section-reorder">
                                 <button class="ctrl-sm-btn ctrl-move-btn" onclick="ctrlMoveSection(${i},-1)" ${i===0?'disabled':''} title="Move up">↑</button>
                                 <button class="ctrl-sm-btn ctrl-move-btn" onclick="ctrlMoveSection(${i},+1)" ${i===ctrlSections.length-1?'disabled':''} title="Move down">↓</button>
@@ -2554,6 +2556,7 @@ bpmRange.addEventListener('input', (e) => {
                             </div>
                         </div>
                         <div class="ctrl-section-actions">
+                            <button class="ctrl-sm-btn ctrl-jump-btn" onclick="ctrlJumpToSection(${i})" title="Jump to and start playing this section now">⏵ Jump Here</button>
                             <button class="ctrl-sm-btn ctrl-load-btn" onclick="ctrlLoadSectionIntoGrid(${i})" title="Load this section into the main grid">📋 To Grid</button>
                             <button class="ctrl-sm-btn ctrl-dupe-btn"  onclick="ctrlDuplicateSection(${i})"   title="Duplicate this section">⧉ Dupe</button>
                             <button class="ctrl-sm-btn ctrl-capture-btn" onclick="ctrlCaptureGrid(${i})"      title="Capture current grid settings into this section">⬇ Capture Grid</button>
@@ -3065,6 +3068,69 @@ function generateAlaapPattern() {
     
     return alaapPattern;
 }
+
+        // Jump to (and immediately start playing) any section, regardless of
+        // whether the controller is currently stopped, playing, mid-intro,
+        // mid-outro, or mid-ramp. This bypasses the normal linear cycle/next
+        // logic and just re-points playback at the chosen section.
+        function ctrlJumpToSection(index) {
+            if (index < 0 || index >= ctrlSections.length) return;
+
+            // Stop any currently running interval/voices without touching
+            // ctrlIsPlaying (we're about to immediately resume playing).
+            if (ctrlIntervalId) { clearInterval(ctrlIntervalId); ctrlIntervalId = null; }
+            Object.keys(legatoVoices).forEach(idx => stopLegatoVoice(parseInt(idx)));
+
+            ctrlIsPlaying = true;
+            ctrlIsIntro = false;
+            ctrlIsOutro = false;
+            ctrlNextSectionRequested = false;
+            ctrlRampActive = false;
+            ctrlCurrentSectionIndex = index;
+            ctrlCurrentCycle = 1;
+            ctrlCurrentBeat = 0;
+
+            document.getElementById('ctrlStartBtn').disabled = true;
+            document.getElementById('ctrlStopBtn').disabled = false;
+            document.getElementById('ctrlNextBtn').disabled = false;
+
+            const section = ctrlSections[index];
+
+            if (section.type === 'tempoRamp') {
+                ctrlRampActive = true;
+                ctrlRampStartBpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+                ctrlRampTargetBpm = parseInt(section.rampTargetBpm) || ctrlRampStartBpm;
+                ctrlRampCurrentBpm = ctrlRampStartBpm;
+                ctrlRampTotalBeats = parseInt(section.rampBeats) || 1;
+                ctrlRampBeatCount = 0;
+                // Ramps carry the previous section's melody; fall back to the
+                // current grid if this ramp happens to be first in the list.
+                const prevSection = ctrlSections[index - 1];
+                if (prevSection) {
+                    ctrlLoadMelodyForSection(prevSection);
+                    ctrlRampMelodyDivision = prevSection._resolvedDivision || parseInt(document.getElementById('divisionSelect').value) || 2;
+                } else {
+                    ctrlLoadMelodyForSection({ beats: '', division: '', preset: '' });
+                    ctrlRampMelodyDivision = parseInt(document.getElementById('divisionSelect').value) || 2;
+                }
+                ctrlRampMelodyBeats = ctrlCurrentGrid[0] ? ctrlCurrentGrid[0].length : 1;
+                ctrlSyncBpmToMain(ctrlRampStartBpm);
+                ctrlCreateBeatIndicator(ctrlRampMelodyBeats / ctrlRampMelodyDivision);
+                ctrlUpdateStatus();
+                ctrlRenderSections();
+                ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (ctrlRampStartBpm * ctrlRampMelodyDivision)) * 1000);
+                return;
+            }
+
+            ctrlLoadMelodyForSection(section);
+            const rb = section._resolvedBeats;
+            const rd = section._resolvedDivision;
+            const rbpm = section.bpm || parseInt(document.getElementById('bpm').value) || 120;
+            ctrlCreateBeatIndicator(rb);
+            ctrlUpdateStatus();
+            ctrlRenderSections();
+            ctrlIntervalId = setInterval(ctrlPlayBeat, (60 / (rbpm * rd)) * 1000);
+        }
 
         function ctrlUpdateStatus() {
             if (ctrlIsIntro) {
